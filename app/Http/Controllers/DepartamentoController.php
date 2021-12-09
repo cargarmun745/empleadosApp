@@ -153,8 +153,6 @@ class DepartamentoController extends Controller
                                 $arrayEmpleados[$contadorEmpleados]=$empleado;
                                 $contadorEmpleados++;
                             }
-                    
-            
                             $arrayPuestos[$i]['nombre']=$puestosTot->nombre;
                             $arrayPuestos[$i]['contador']=$contadorEmpleados;
                             $arrayPuestos[$i]['empleados']=$arrayEmpleados;
@@ -175,17 +173,32 @@ class DepartamentoController extends Controller
                 }
             }
         }
+        $arrayPuestosFinal;
+        $i=0;
+        foreach($arrayPuestos as $arrayPuesto){
+            $puestoCorrecto;
+            foreach($arrayPuestos as $arrayPuesto2){
+                if($arrayPuesto['nombre']==$arrayPuesto2['nombre']){
+                    
+                    $puestoCorrecto=$arrayPuesto2;
+                    // unset($arrayPuesto2);
+                }else{
+                    $puestoCorrecto=$arrayPuesto;
+                }
+            }
+            $arrayPuestosFinal[$i]=$puestoCorrecto;
+        }
+        
         
         // Obtencion de los salarios máximos y mínimos
-        if(!isset($arrayPuestos)||$arrayPuestos==''){
-            $arrayPuestos=null;
+        if(!isset($arrayPuestosFinal)||$arrayPuestosFinal==''){
+            $arrayPuestosFinal=null;
             $arrayPuestosSalarios=null;
         }else{
             $arraySalarios;
             $contador;
             foreach($puestos as $puesto) {
-                // dd($arrayPuestos);
-                foreach($arrayPuestos as $arrayPuesto) {
+                foreach($arrayPuestosFinal as $arrayPuesto) {
                     if($arrayPuesto['nombre']==$puesto->nombre){
                         $arrayPuestosSalarios[$contador]=$puesto;
                         $contador++;
@@ -214,8 +227,7 @@ class DepartamentoController extends Controller
         
         // dd($arraySalarios);
         $data['arraySalarios']=$arraySalarios;
-        $data['arrayPuestos']= $arrayPuestos;
-        // dd($arrayPuestos[1]['nombre']);
+        $data['arrayPuestos']= $arrayPuestosFinal;
         return view('departamento.show', $data);
     }
 
