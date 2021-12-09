@@ -175,18 +175,20 @@ class DepartamentoController extends Controller
         }
         $arrayPuestosFinal;
         $i=0;
-        foreach($arrayPuestos as $arrayPuesto){
-            $puestoCorrecto;
-            foreach($arrayPuestos as $arrayPuesto2){
-                if($arrayPuesto['nombre']==$arrayPuesto2['nombre']){
-                    
-                    $puestoCorrecto=$arrayPuesto2;
-                    // unset($arrayPuesto2);
-                }else{
-                    $puestoCorrecto=$arrayPuesto;
+        if(isset($arrayPuestos)){
+            foreach($arrayPuestos as $arrayPuesto){
+                $puestoCorrecto;
+                foreach($arrayPuestos as $arrayPuesto2){
+                    if($arrayPuesto['nombre']==$arrayPuesto2['nombre']){
+                        
+                        $puestoCorrecto=$arrayPuesto2;
+                        // unset($arrayPuesto2);
+                    }else{
+                        $puestoCorrecto=$arrayPuesto;
+                    }
                 }
+                $arrayPuestosFinal[$i]=$puestoCorrecto;
             }
-            $arrayPuestosFinal[$i]=$puestoCorrecto;
         }
         
         
